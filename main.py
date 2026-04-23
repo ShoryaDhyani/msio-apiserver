@@ -104,7 +104,7 @@ async def root(request: Request):
 
 # ── Routes ────────────────────────────────────────────────────────
 @app.post('/project')
-async def create_project(body: ProjectRequest):
+async def create_project(body: ProjectRequest, request: Request):
     project_slug = body.slug if body.slug else generate_slug(2)
 
 
