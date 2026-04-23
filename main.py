@@ -33,7 +33,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-PORT = 9000
+PORT = 8000
 
 # Redis
 subscriber = aioredis.from_url(config.REDIS_URL)
