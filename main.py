@@ -1,5 +1,6 @@
 import asyncio
 from fastapi.staticfiles import StaticFiles
+from httpcore import request
 import uvicorn
 import redis.asyncio as aioredis
 import boto3
@@ -132,11 +133,15 @@ async def create_project(body: ProjectRequest):
         }
     )
 
+    # Get protocol + host from request
+    host = request.headers.get("host")
+    proto = request.headers.get("x-forwarded-proto", request.url.scheme)
+
     return {
         'status': 'queued',
         'data': {
             'projectSlug': project_slug,
-            'url': f'http://{project_slug}.{config.PROXY_BASE_PATH}'
+            'url': f'{proto}://{project_slug}.{host}'
         }
     }
 
